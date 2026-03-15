@@ -22,7 +22,7 @@ The compiled `.jar` file will be located in `build/libs/`.
 1. Go to [Releases](https://github.com/kararasenok-gd/NewDayNotifier/releases) tab
 2. Download `.jar` from any release
 
-## Supported server versions
+## Supported Minecraft versions
 
 | Version | Support |
 |---------|---------|

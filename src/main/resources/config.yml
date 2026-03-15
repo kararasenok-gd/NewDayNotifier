@@ -1,0 +1,26 @@
+# NewDayNotifier config
+# by @kararasenok_gd
+
+settings:
+  # Where new day should be displayed
+  display: "actionbar" # options: actionbar, chat, title
+
+  # Name of the world where the plugin should track days
+  world: "world"
+
+  # Play sound when a new day starts
+  sound: true
+
+messages:
+  # Messages to send when a new day comes. %day% = current day
+  actionbar:
+    text: "§eDay §6%day%" # Text for action bar display
+
+  chat:
+    text: "§eDay §6%day%" # Text for chat display
+
+  title:
+    text: "New day!"       # Main title text
+    subtext:
+      enabled: true         # Show subtext under main title
+      text: "Current day: %day%" # Subtext content

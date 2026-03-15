@@ -50,10 +50,10 @@ settings:
 messages:
   # Messages to send when a new day comes. %day% = current day
   actionbar:
-    text: "&eDay &6%day%" # Text for action bar display
+    text: "§eDay §6%day%" # Text for action bar display
 
   chat:
-    text: "&eDay &6%day%" # Text for chat display
+    text: "§eDay §6%day%" # Text for chat display
 
   title:
     text: "New day!"       # Main title text

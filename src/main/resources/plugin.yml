@@ -1,0 +1,13 @@
+name: NewDayNotifier
+version: '1.0.0-beta1'
+main: space.kararasenok.newDayNotifier.NewDayNotifier
+api-version: '1.21'
+
+permissions:
+  newdaynotifier.reload:
+    description: Allows access to the /day reload command
+    default: op
+  newdaynotifier.*:
+    description: Wildcard permission
+    children:
+      newdaynotifier.reload: true

@@ -24,7 +24,7 @@ public final class NewDayNotifier extends JavaPlugin {
            try {
                HttpClient client = HttpClient.newHttpClient();
                HttpRequest request = HttpRequest.newBuilder()
-                       .uri(URI.create("https://api.github.com/" + repository + "/releases/latest"))
+                       .uri(URI.create("https://api.github.com/repos/" + repository + "/releases/latest"))
                        .header("Accept", "application/vnd.github.v3+json")
                        .build();
 

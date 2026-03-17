@@ -1,4 +1,4 @@
-package space.kararasenok.newDayNotifier;
+package space.kararasenok.newDayNotifier.commands;
 
 import io.papermc.paper.command.brigadier.BasicCommand;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
+import space.kararasenok.newDayNotifier.NewDayNotifier;
 
 import java.util.Collection;
 import java.util.List;

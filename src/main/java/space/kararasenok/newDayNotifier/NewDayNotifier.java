@@ -5,6 +5,7 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
 import space.kararasenok.newDayNotifier.commands.ReloadConfigCommand;
 import space.kararasenok.newDayNotifier.listeners.DayTracker;
+import space.kararasenok.newDayNotifier.listeners.PlayerJoin;
 
 public final class NewDayNotifier extends JavaPlugin {
     @Override
@@ -22,6 +23,7 @@ public final class NewDayNotifier extends JavaPlugin {
         });
 
         new DayTracker().start(this);
+        getServer().getPluginManager().registerEvents(new PlayerJoin(this), this);
         getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {
             final Commands commands = event.registrar();
 

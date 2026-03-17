@@ -31,8 +31,7 @@ public class DayTracker {
                 if (method == null) { method = "actionbar"; }
 
                 if (method.equals("actionbar")) {
-                    String text = plugin.getConfig().getString("messages.actionbar.text");
-                    if (text == null) { text = "§eDay §6%day%"; }
+                    String text = plugin.getConfig().getString("messages.actionbar.text", "§eDay §6%day%");
 
                     text = text.replace("%day%", Long.toString(day));
 
@@ -40,19 +39,15 @@ public class DayTracker {
                         p.sendActionBar(text);
                     }
                 } else if (method.equals("chat")) {
-                    String text = plugin.getConfig().getString("messages.chat.text");
-                    if (text == null) { text = "§eDay §6%day%"; }
+                    String text = plugin.getConfig().getString("messages.chat.text", "§eDay §6%day%");
                     text = text.replace("%day%", Long.toString(day));
 
                     Component textComponent = Component.text(text);
                     Bukkit.broadcast(textComponent);
                 } else if (method.equals("title")) {
-                    String text = plugin.getConfig().getString("messages.title.text");
-                    String subtext =  plugin.getConfig().getString("messages.title.subtext.text");
-                    boolean subtextEnabled = plugin.getConfig().getBoolean("messages.title.subtext.enabled");
-
-                    if (text == null) { text = "New day!"; }
-                    if (subtext == null) { subtext = "Current day: %day%"; }
+                    String text = plugin.getConfig().getString("messages.title.text", "New day!");
+                    String subtext =  plugin.getConfig().getString("messages.title.subtext.text", "Current day: %day%");
+                    boolean subtextEnabled = plugin.getConfig().getBoolean("messages.title.subtext.enabled", true);
 
                     text = text.replace("%day%", Long.toString(day));
                     subtext = subtext.replace("%day%", Long.toString(day));
@@ -69,8 +64,6 @@ public class DayTracker {
                     plugin.getLogger().warning("I don't know what to do with " + method + " method.");
                 }
 
-                boolean sounds = plugin.getConfig().getBoolean("settings.sound");
-                Sound newDaySound = Sound.sound(Key.key("entity.player.levelup"), Sound.Source.MASTER, 1.0f, 1.0f);
                 boolean sounds = plugin.getConfig().getBoolean("settings.sound.enabled", true);
                 String soundID = plugin.getConfig().getString("settings.sound.id", "entity.player.levelup");
                 Sound newDaySound = Sound.sound(Key.key(soundID), Sound.Source.MASTER, 1.0f, 1.0f);

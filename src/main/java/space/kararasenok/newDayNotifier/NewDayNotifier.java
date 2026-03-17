@@ -1,56 +1,23 @@
 package space.kararasenok.newDayNotifier;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEvents;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.concurrent.CompletableFuture;
+import space.kararasenok.newDayNotifier.commands.ReloadConfigCommand;
+import space.kararasenok.newDayNotifier.listeners.DayTracker;
 
 public final class NewDayNotifier extends JavaPlugin {
-
-    private void checkUpdates() {
-        String version = this.getDescription().getVersion();
-        getLogger().info("Current version: " +  version);
-
-        String repository = "kararasenok-gd/NewDayNotifier";
-
-        CompletableFuture.runAsync(() -> {
-           try {
-               HttpClient client = HttpClient.newHttpClient();
-               HttpRequest request = HttpRequest.newBuilder()
-                       .uri(URI.create("https://api.github.com/repos/" + repository + "/releases/latest"))
-                       .header("Accept", "application/vnd.github.v3+json")
-                       .build();
-
-               HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-               if (response.statusCode() == 200) {
-                   JsonObject json = (JsonObject) new JsonParser().parse(response.body()).getAsJsonObject();
-                   String latestVersion = json.get("tag_name").getAsString().replace("v", "");
-                   getLogger().info("Latest version: " + latestVersion);
-                   if (!version.equalsIgnoreCase(latestVersion)) {
-                       getLogger().info("NewDayNotifier has new update!");
-                       getLogger().info("Download it here: https://github.com/" + repository + "/releases/latest");
-                   }
-               }
-           } catch (Exception e) {
-               getLogger().severe("Failed to check updates.");
-               getLogger().severe(e.getMessage());
-           }
-        });
-    };
-
     @Override
     public void onEnable() {
         saveDefaultConfig();
         getLogger().info("NewDayNotifier loaded successfully!");
 
-        checkUpdates();
+        Updates.checkUpdates(this).thenAccept(out -> {
+            if (out) {
+                getLogger().info("You are using outdated version of NewDayNotifier!");
+                getLogger().info("Download update here: https://github.com/kararasenok-gd/NewDayNotifier/releases/latest");
+            };
+        });
 
         new DayTracker().start(this);
         getLifecycleManager().registerEventHandler(LifecycleEvents.COMMANDS, event -> {

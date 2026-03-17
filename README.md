@@ -1,4 +1,4 @@
-# NewDayNotifier
+# NewDayNotifier [![wakatime](https://wakatime.com/badge/user/d0f907bb-6f68-432d-b241-cfa014b3ae15/project/b6c10a95-1549-4ca1-ae1c-c1dbc21e77f7.svg)](https://wakatime.com/badge/user/d0f907bb-6f68-432d-b241-cfa014b3ae15/project/b6c10a95-1549-4ca1-ae1c-c1dbc21e77f7)
 
 Simple Minecraft plugin for Paper that displays how many in-game days have passed since world creation.  
 And also this is my first Java project, so yeah.
@@ -45,7 +45,9 @@ settings:
   world: "world"
 
   # Play sound when a new day starts
-  sound: true
+  sound:
+    enabled: true
+    id: "entity.player.levelup" # Sound ID. You can test it by using command /playsound minecraft:<sound id> master @p
 
 messages:
   # Messages to send when a new day comes. %day% = current day

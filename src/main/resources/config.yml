@@ -9,7 +9,9 @@ settings:
   world: "world"
 
   # Play sound when a new day starts
-  sound: true
+  sound:
+    enabled: true
+    id: "entity.player.levelup" # Sound ID. You can test it by using command /playsound minecraft:<sound id> master @p
 
 messages:
   # Messages to send when a new day comes. %day% = current day

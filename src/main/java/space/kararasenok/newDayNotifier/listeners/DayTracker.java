@@ -71,6 +71,9 @@ public class DayTracker {
 
                 boolean sounds = plugin.getConfig().getBoolean("settings.sound");
                 Sound newDaySound = Sound.sound(Key.key("entity.player.levelup"), Sound.Source.MASTER, 1.0f, 1.0f);
+                boolean sounds = plugin.getConfig().getBoolean("settings.sound.enabled", true);
+                String soundID = plugin.getConfig().getString("settings.sound.id", "entity.player.levelup");
+                Sound newDaySound = Sound.sound(Key.key(soundID), Sound.Source.MASTER, 1.0f, 1.0f);
                 if (sounds) {
                     Bukkit.getServer().playSound(newDaySound);
                 }

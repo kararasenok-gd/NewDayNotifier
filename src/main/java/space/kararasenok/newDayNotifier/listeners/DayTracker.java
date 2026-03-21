@@ -12,6 +12,42 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class DayTracker {
     private long lastDay = -1;
 
+    private static void display(JavaPlugin plugin, Long day, String method, String configRoot) {
+        if (method.equals("actionbar")) {
+            String text = plugin.getConfig().getString(configRoot + ".actionbar.text", "§eDay §6%day%");
+
+            text = text.replace("%day%", Long.toString(day));
+
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                p.sendActionBar(text);
+            }
+        } else if (method.equals("chat")) {
+            String text = plugin.getConfig().getString(configRoot + ".chat.text", "§eDay §6%day%");
+            text = text.replace("%day%", Long.toString(day));
+
+            Component textComponent = Component.text(text);
+            Bukkit.broadcast(textComponent);
+        } else if (method.equals("title")) {
+            String text = plugin.getConfig().getString(configRoot + ".title.text", "New day!");
+            String subtext =  plugin.getConfig().getString(configRoot + ".title.subtext.text", "Current day: %day%");
+            boolean subtextEnabled = plugin.getConfig().getBoolean(configRoot + ".title.subtext.enabled", true);
+
+            text = text.replace("%day%", Long.toString(day));
+            subtext = subtext.replace("%day%", Long.toString(day));
+
+            final Title titleComponent = Title.title(
+                    Component.text(text),
+                    Component.text(subtextEnabled ? subtext : "")
+            );
+
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                p.showTitle(titleComponent);
+            }
+        } else {
+            plugin.getComponentLogger().warn("I don't know what to do with {} method.", method);
+        }
+    }
+
     public void start(JavaPlugin plugin) {
         Bukkit.getScheduler().runTaskTimer(plugin, () -> {
             String worldName = plugin.getConfig().getString("settings.world");
@@ -65,6 +101,7 @@ public class DayTracker {
                     plugin.getLogger().warning("I don't know what to do with " + method + " method.");
                 }
 
+                display(plugin, day, method, "messages");
                 boolean sounds = plugin.getConfig().getBoolean("settings.sound.enabled", true);
                 String soundID = plugin.getConfig().getString("settings.sound.id", "entity.player.levelup");
                 Sound newDaySound = Sound.sound(Key.key(soundID), Sound.Source.MASTER, 1.0f, 1.0f);

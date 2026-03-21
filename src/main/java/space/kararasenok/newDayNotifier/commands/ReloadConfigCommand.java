@@ -42,6 +42,19 @@ public class ReloadConfigCommand implements BasicCommand {
 
             long day = w.getFullTime() / 24000;
             sender.sendMessage("§bCurrent day: §r§6" + day);
+
+            long daysInSeconds = w.getFullTime() / 20;
+
+            long IRLdays = daysInSeconds / 86400;
+            long IRLhours = (daysInSeconds % 86400) / 3600;
+            long IRLminutes = (daysInSeconds % 3600) / 60;
+            long IRLseconds = daysInSeconds % 60;
+
+            sender.sendMessage("§r┗ §bDays: §r§6" + IRLdays);
+            sender.sendMessage("§r┗ §bHours: §r§6" + IRLhours);
+            sender.sendMessage("§r┗ §bMinutes: §r§6" + IRLminutes);
+            sender.sendMessage("§r┗ §bSeconds: §r§6" + IRLseconds);
+            sender.sendMessage("§r┗ §bTicks: §r§6" + w.getFullTime());
         }
     }
 

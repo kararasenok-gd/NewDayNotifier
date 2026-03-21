@@ -64,13 +64,6 @@ messages:
       text: "Current day: %day%" # Subtext content
 ````
 
-### Explanation:
-
-* **settings.display** — choose how the day message is shown (`actionbar`, `chat`, or `title`)
-* **settings.world** — specify which world to track
-* **settings.sound** — enable/disable sound when a new day starts
-* **messages** — customize the text for each display type, `%day%` will be replaced with the current in-game day
-
 ## Found a bug or want to suggest something?
 
 [Open an issue](https://github.com/kararasenok-gd/NewDayNotifier/issues) and write anything you want to report or suggest to add!

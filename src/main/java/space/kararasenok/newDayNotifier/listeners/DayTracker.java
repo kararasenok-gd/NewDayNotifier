@@ -19,6 +19,7 @@ public class DayTracker {
             World w = Bukkit.getWorld(worldName);
             if (w == null) {
                 plugin.getLogger().warning("World " + worldName + " not found!");
+                plugin.getComponentLogger().warn("World {} not found!", worldName);
                 return;
             }
 

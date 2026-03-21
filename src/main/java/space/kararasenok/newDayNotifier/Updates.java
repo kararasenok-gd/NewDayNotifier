@@ -51,6 +51,8 @@ public class Updates {
             } catch (Exception e) {
                 plugin.getLogger().severe("Failed to check updates.");
                 plugin.getLogger().severe(e.getMessage());
+                plugin.getComponentLogger().error("Failed to check updates.");
+                plugin.getComponentLogger().error(e.getMessage());
             }
 
             return false;

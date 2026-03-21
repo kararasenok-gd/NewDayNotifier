@@ -11,16 +11,14 @@ public final class NewDayNotifier extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        getLogger().info("NewDayNotifier loaded successfully!");
+        getComponentLogger().info("NewDayNotifier loaded successfully!");
+
 
         Updates.checkUpdates(this).thenAccept(out -> {
             if (out) {
-                getLogger().info("You are using outdated version of NewDayNotifier!");
-                getLogger().info("Download update here: https://github.com/kararasenok-gd/NewDayNotifier/releases/latest");
                 getComponentLogger().info("You are using outdated version of NewDayNotifier!");
                 getComponentLogger().info("Download update here: https://github.com/kararasenok-gd/NewDayNotifier/releases/latest");
             } else {
-                getLogger().info("NewDayNotifier is up to date!");
                 getComponentLogger().info("NewDayNotifier is up to date!");
             };
         });
@@ -40,7 +38,6 @@ public final class NewDayNotifier extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().info("NewDayNotifier deactivated successfully!");
         getComponentLogger().info("NewDayNotifier deactivated successfully!");
     }
 }

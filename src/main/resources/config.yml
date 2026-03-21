@@ -13,6 +13,30 @@ settings:
     enabled: true
     id: "entity.player.levelup" # Sound ID. You can test it by using command /playsound minecraft:<sound id> master @p
 
+  # Special events that will happen every few days
+  # Example: Display title every 100 days // Launch fireworks every 1000 days
+  special:
+    enabled: true
+    days: 100 # How often (in days) will the events occur?
+
+    displayText:
+      enabled: true
+      type: "title" # same as settings.display
+
+      messages:
+        # same as messages (this is settings.special.displayText.messages)
+        actionbar:
+          text: "§eDay §6%day%"
+
+        chat:
+          text: "§eDay §6%day%"
+
+        title:
+          text: "New day!"
+          subtext:
+            enabled: true
+            text: "Current day: %day%"
+
 messages:
   # Messages to send when a new day comes. %day% = current day
   actionbar:

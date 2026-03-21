@@ -64,44 +64,42 @@ public class DayTracker {
             if (day != lastDay) {
                 lastDay = day;
 
+                boolean specialEvents = plugin.getConfig().getBoolean("settings.special.enabled");
+                long specialDays = plugin.getConfig().getLong("settings.special.days");
+
+                if (specialEvents && day % specialDays == 0) {
+                    boolean displayEnabled = plugin.getConfig().getBoolean("settings.special.displayText.enabled", true);
+                    // boolean customEnabled = plugin.getConfig().getBoolean("settings.special.custom.enabled", false);
+
+                    if (displayEnabled) {
+                        display(plugin, day, plugin.getConfig().getString("settings.special.displayText.type", "title"), "settings.special.displayText.messages");
+                    }
+
+                    // TODO: This
+
+                    // Config (in settings.special):
+                    //    custom:
+                    //      # Here you can set up your own events using in-game commands.
+                    //      enabled: false
+                    //      commands:
+                    //        # All commands will run as player (as in /execute as @a at @a run <your command here>)
+                    //        - "summon firework_rocket ~ ~10 ~ {LifeTime:0,FireworksItem:{id:firework_rocket,components:{fireworks:{flight_duration:1,explosions:[{shape:star,has_twinkle:1b,has_trail:1b,colors:[I;16701501],fade_colors:[I;16351261]}]}}}}"
+                    //        - "effect give @s minecraft:regeneration 90 0 true"
+
+                    // if (customEnabled) {
+                        // List<String> commands = plugin.getConfig().getStringList("settings.special.custom.commands");
+
+                        // for (String cmd : commands) {
+
+                        // }
+                    // }
+                }
+
                 String method = plugin.getConfig().getString("settings.display");
                 if (method == null) { method = "actionbar"; }
 
-                if (method.equals("actionbar")) {
-                    String text = plugin.getConfig().getString("messages.actionbar.text", "§eDay §6%day%");
-
-                    text = text.replace("%day%", Long.toString(day));
-
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.sendActionBar(text);
-                    }
-                } else if (method.equals("chat")) {
-                    String text = plugin.getConfig().getString("messages.chat.text", "§eDay §6%day%");
-                    text = text.replace("%day%", Long.toString(day));
-
-                    Component textComponent = Component.text(text);
-                    Bukkit.broadcast(textComponent);
-                } else if (method.equals("title")) {
-                    String text = plugin.getConfig().getString("messages.title.text", "New day!");
-                    String subtext =  plugin.getConfig().getString("messages.title.subtext.text", "Current day: %day%");
-                    boolean subtextEnabled = plugin.getConfig().getBoolean("messages.title.subtext.enabled", true);
-
-                    text = text.replace("%day%", Long.toString(day));
-                    subtext = subtext.replace("%day%", Long.toString(day));
-
-                    final Title titleComponent = Title.title(
-                            Component.text(text),
-                            Component.text(subtextEnabled ? subtext : "")
-                    );
-
-                    for (Player p : Bukkit.getOnlinePlayers()) {
-                        p.showTitle(titleComponent);
-                    }
-                } else {
-                    plugin.getLogger().warning("I don't know what to do with " + method + " method.");
-                }
-
                 display(plugin, day, method, "messages");
+
                 boolean sounds = plugin.getConfig().getBoolean("settings.sound.enabled", true);
                 String soundID = plugin.getConfig().getString("settings.sound.id", "entity.player.levelup");
                 Sound newDaySound = Sound.sound(Key.key(soundID), Sound.Source.MASTER, 1.0f, 1.0f);

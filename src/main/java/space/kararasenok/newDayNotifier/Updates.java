@@ -11,6 +11,8 @@ import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class Updates {
+    private static final String repository = "kararasenok-gd/NewDayNotifier";
+
     private static boolean isOutdated(String current, String latest) {
         String[] c = current.split("\\.");
         String[] l = latest.split("\\.");
@@ -30,8 +32,6 @@ public class Updates {
 
     public static CompletableFuture<Boolean> checkUpdates(JavaPlugin plugin) {
         String version = plugin.getDescription().getVersion();
-
-        String repository = "kararasenok-gd/NewDayNotifier";
 
         return CompletableFuture.supplyAsync(() -> {
             try {

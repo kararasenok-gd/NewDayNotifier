@@ -66,7 +66,7 @@ public class DayTracker {
                 boolean specialEvents = plugin.getConfig().getBoolean("settings.special.enabled");
                 long specialDays = plugin.getConfig().getLong("settings.special.days");
 
-                if (specialEvents && day % specialDays == 0) {
+                if (specialEvents && day % specialDays == 0 && day != 0) {
                     boolean displayEnabled = plugin.getConfig().getBoolean("settings.special.displayText.enabled", true);
                     // boolean customEnabled = plugin.getConfig().getBoolean("settings.special.custom.enabled", false);
 

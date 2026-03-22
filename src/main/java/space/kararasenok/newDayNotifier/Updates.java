@@ -100,6 +100,7 @@ public class Updates {
                 return;
             }
 
+            plugin.saveResource("config.yml", true);
             FileConfiguration newConfig2 = YamlConfiguration.loadConfiguration(oldConfigFile);
 
             for (String key : oldConfig.getKeys(true)) {

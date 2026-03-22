@@ -32,7 +32,7 @@ settings:
           text: "§eDay §6%day%"
 
         title:
-          text: "New day!"
+          text: "§bYou survived another 100 days!"
           subtext:
             enabled: true
             text: "Current day: %day%"

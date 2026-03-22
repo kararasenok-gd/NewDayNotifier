@@ -33,43 +33,8 @@ The compiled `.jar` file will be located in `build/libs/`.
 After installing the plugin, a `config.yml` file will be generated in the plugin folder.  
 Here’s an example configuration with explanations:
 
-```yaml
-# NewDayNotifier config
-# by @kararasenok_gd
-
-settings:
-  # Where new day should be displayed
-  display: "actionbar" # options: actionbar, chat, title
-
-  # Name of the world where the plugin should track days
-  world: "world"
-
-  # Play sound when a new day starts
-  sound:
-    enabled: true
-    id: "entity.player.levelup" # Sound ID. You can test it by using command /playsound minecraft:<sound id> master @p
-
-messages:
-  # Messages to send when a new day comes. %day% = current day
-  actionbar:
-    text: "§eDay §6%day%" # Text for action bar display
-
-  chat:
-    text: "§eDay §6%day%" # Text for chat display
-
-  title:
-    text: "New day!"       # Main title text
-    subtext:
-      enabled: true         # Show subtext under main title
-      text: "Current day: %day%" # Subtext content
-````
-
-### Explanation:
-
-* **settings.display** — choose how the day message is shown (`actionbar`, `chat`, or `title`)
-* **settings.world** — specify which world to track
-* **settings.sound** — enable/disable sound when a new day starts
-* **messages** — customize the text for each display type, `%day%` will be replaced with the current in-game day
+[[Open config.yml from stable version]](https://github.com/kararasenok-gd/NewDayNotifier/blob/master/src/main/resources/config.yml)
+[[Open config.yml from beta version]](https://github.com/kararasenok-gd/NewDayNotifier/blob/dev/src/main/resources/config.yml)
 
 ## Found a bug or want to suggest something?
 

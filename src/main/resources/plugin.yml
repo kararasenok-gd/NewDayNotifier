@@ -1,5 +1,5 @@
 name: NewDayNotifier
-version: '1.1.0'
+version: '1.2.0'
 main: space.kararasenok.newDayNotifier.NewDayNotifier
 api-version: '1.21'
 

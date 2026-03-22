@@ -2,15 +2,26 @@ package space.kararasenok.newDayNotifier;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 
 public class Updates {
+    private static final String repository = "kararasenok-gd/NewDayNotifier";
+
     private static boolean isOutdated(String current, String latest) {
         String[] c = current.split("\\.");
         String[] l = latest.split("\\.");
@@ -31,8 +42,6 @@ public class Updates {
     public static CompletableFuture<Boolean> checkUpdates(JavaPlugin plugin) {
         String version = plugin.getDescription().getVersion();
 
-        String repository = "kararasenok-gd/NewDayNotifier";
-
         return CompletableFuture.supplyAsync(() -> {
             try {
                 HttpClient client = HttpClient.newHttpClient();
@@ -49,11 +58,62 @@ public class Updates {
                     return isOutdated(version, latestVersion);
                 }
             } catch (Exception e) {
-                plugin.getLogger().severe("Failed to check updates.");
-                plugin.getLogger().severe(e.getMessage());
+                plugin.getComponentLogger().error("Failed to check updates.");
+                plugin.getComponentLogger().error(e.getMessage());
             }
 
             return false;
         });
     };
+
+    public static void validateAndFixConfig(JavaPlugin plugin) {
+        File oldConfigFile = new File(plugin.getDataFolder(), "config.yml");
+        if (!oldConfigFile.exists()) {
+            plugin.saveResource("config.yml", false);
+            return;
+        }
+
+        FileConfiguration oldConfig = YamlConfiguration.loadConfiguration(oldConfigFile);
+
+        InputStream newConfigStream = plugin.getResource("config.yml");
+        if (newConfigStream == null) return;
+        FileConfiguration newConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(newConfigStream));
+
+        boolean needUpdate = false;
+
+        for (String key : newConfig.getKeys(true)) {
+            if (oldConfig.get(key) == null) {
+                needUpdate = true;
+                break;
+            }
+        }
+
+        if (needUpdate) {
+            plugin.getComponentLogger().info("Updating config...");
+            String ts = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss").format(new Date());
+            File backup = new File(plugin.getDataFolder(), "config." + ts + ".yml");
+
+            try {
+                oldConfig.save(backup);
+            } catch (IOException e) {
+                plugin.getComponentLogger().warn("Could not save old config to {}. Update config.yml manually", backup.getAbsolutePath());
+                return;
+            }
+
+            plugin.saveResource("config.yml", true);
+            FileConfiguration newConfig2 = YamlConfiguration.loadConfiguration(oldConfigFile);
+
+            for (String key : oldConfig.getKeys(true)) {
+                if (oldConfig.get(key) instanceof ConfigurationSection) continue;
+                newConfig2.set(key, oldConfig.get(key));
+            }
+            try {
+                newConfig2.save(oldConfigFile);
+            } catch (IOException e) { plugin.getComponentLogger().warn("Could not save new config to {}. Update config.yml manually", oldConfigFile.getAbsolutePath()); }
+
+            plugin.getComponentLogger().info("config.yml has been updated.");
+        } else {
+            plugin.getComponentLogger().info("config.yml is up to date!");
+        }
+    }
 }

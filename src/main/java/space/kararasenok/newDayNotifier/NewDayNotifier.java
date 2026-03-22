@@ -13,6 +13,7 @@ public final class NewDayNotifier extends JavaPlugin {
         saveDefaultConfig();
         getComponentLogger().info("NewDayNotifier loaded successfully!");
 
+        Updates.validateAndFixConfig(this);
 
         Updates.checkUpdates(this).thenAccept(out -> {
             if (out) {
